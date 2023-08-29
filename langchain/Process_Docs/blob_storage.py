@@ -136,8 +136,14 @@ class AzureBlobStorageClient:
                     "converted_path": ""
                     })
             else:
+                '''
+                for the files that are already converted it will add them to the converted files dictionary
+                '''
                 converted_files[blob.name] = f"https://{self.account_name}.blob.core.windows.net/{self.container_name}/{blob.name}?{sas}"
 
+        '''
+        
+        '''
         for file in files:
             converted_filename = file.pop('converted_filename', '')
             if converted_filename in converted_files:
