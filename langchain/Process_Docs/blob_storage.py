@@ -176,10 +176,16 @@ class AzureBlobStorageClient:
         retrieves the existing metadata associated with the blob
         '''
         blob_metadata = blob_client.get_blob_properties().metadata
-        
-        # Update metadata
+
+        '''
+        adds or updates the key-value pairs from the metadata dictionary
+        If the key already exists in the blob's metadata, the value is updated
+        with the new value from the metadata dictionary 
+        If the key doesn't exist, it is added to the metadata
+        '''
         blob_metadata.update(metadata)
-        # Add metadata to the blob
+        
+        
         blob_client.set_blob_metadata(metadata= blob_metadata)
 
     def get_container_sas(self):
