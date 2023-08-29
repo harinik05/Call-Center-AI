@@ -185,9 +185,14 @@ class AzureBlobStorageClient:
         '''
         blob_metadata.update(metadata)
         
-        
+        '''
+        sets the metadata accordingly
+        '''
         blob_client.set_blob_metadata(metadata= blob_metadata)
 
+    '''
+    
+    '''
     def get_container_sas(self):
         # Generate a SAS URL to the container and return it
         return "?" + generate_container_sas(account_name= self.account_name, container_name= self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=1))
