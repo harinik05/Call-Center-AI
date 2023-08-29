@@ -72,6 +72,11 @@ class AzureBlobStorageClient:
         '''
         blob_client.upload_blob(bytes_data, overwrite=True, content_settings=ContentSettings(content_type=content_type))
         
+        '''
+        the output of this function will be the url of the uploaded blob
+        ? is used to seperate the base URL from the SAS token 
+        SAS url can be used to provide temporary access to the uploaded file
+        '''
         return blob_client.url + '?' + generate_blob_sas(self.account_name, self.container_name, file_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
 
     def get_all_files(self):
