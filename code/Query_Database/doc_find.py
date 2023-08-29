@@ -147,15 +147,22 @@ try:
     llm_helper = LLMHelper()
 
     '''
-    Initializes 
+    Initializes two entries to store info about the files in knowledge base and their associated embeddings
     '''
     st.session_state['data_files'] = llm_helper.blob_client.get_all_files()
     st.session_state['data_files_embeddings'] = llm_helper.get_all_documents(k=1000)
 
+    '''
+    if no files, show error message
+    '''
     if len(st.session_state['data_files']) == 0:
         st.warning("No files found. Go to the 'Add Document' tab to insert your docs.")
 
+    
     else:
+        '''
+        displays all the list of files in the session data
+        '''
         st.dataframe(st.session_state['data_files'], use_container_width=True)
 
         st.text("")
@@ -164,12 +171,17 @@ try:
 
         filenames_list = [d['filename'] for d in st.session_state['data_files']]
         st.selectbox("Select filename to delete", filenames_list, key="file_and_embeddings_to_drop")
-         
+        '''
+        deletes the file and embeddings
+        '''
         st.text("")
         st.button("Delete file and its embeddings", on_click=delete_file_and_embeddings)
         st.text("")
         st.text("")
 
+        '''
+        once file is validated, it will delete the file with the embeddings
+        '''
         if len(st.session_state['data_files']) > 1:
             st.button("Delete all files (with their embeddings)", type="secondary", on_click=delete_all_files_and_embeddings, args=None, kwargs=None)
 
