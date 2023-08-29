@@ -18,7 +18,10 @@ def customcompletion():
     st.session_state['prompt_result']= response.encode().decode()
 
 '''
+this process function will take the input data based on the condition and selects 
+rows from the data frame where the filename column is located. 
 
+the vector store will retrieve the data for the filename and save it as csv
 '''
 def process_all(data):
     llm_helper.vector_store.delete_prompt_results('prompt*')
@@ -41,29 +44,48 @@ try:
     }
     st.set_page_config(layout="wide", menu_items=menu_items)
 
+    '''
+    if the key data processed is present in the dictionary, then it will store the 
+    specific variables and maintain state
+    '''
     if not 'data_processed' in st.session_state:
         st.session_state['data_processed'] = None
 
     llm_helper = LLMHelper()
 
-    # Query RediSearch to get all the embeddings
+    '''
+    obtain all the documents from the database
+    '''
     data = llm_helper.get_all_documents(k=1000)
 
+    '''
+    length = 0, then no embeddings will be found
+    '''
     if len(data) == 0:
         st.warning("No embeddings found. Go to the 'Add Document' tab to insert your docs.")
+    
     else:
+        '''
+        the code proceeds to display them in dataframe using the text areas called
+        document, prompt
+        '''
         st.dataframe(data, use_container_width=True)
-
-        # displaying a box for a custom prompt
         st.text_area(label="Document", height=400, key="doc_text")
         st.text_area(label="Prompt", height=100, key="input_prompt")
         st.button(label="Execute tasks", on_click=customcompletion)
-        # displaying the summary
+        
+        '''
+        if the prompt result is present in the session state, then it will retrieve the 
+        result and display it in a text area labeled results
+        '''
         result = ""
         if 'prompt_result' in st.session_state:
             result = st.session_state['prompt_result']
             st.text_area(label="Result", value=result, height=400)
 
+        '''
+        process docs and download results
+        '''
         cols = st.columns([1,1,1,2])
         with cols[1]:
             st.multiselect("Select documents", sorted(set(data.filename.tolist())), key="selected_docs")
