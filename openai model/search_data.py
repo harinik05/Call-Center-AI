@@ -4,15 +4,22 @@ import traceback
 from utilities.helper import LLMHelper
 
 '''
-get the prompt from the user and send it over to the 
+get the prompt from the user and combines the text from the document and input 
+provided by the user
 '''
 def get_prompt():
     return f"{st.session_state['doc_text']}\n{st.session_state['input_prompt']}"
-   
+
+'''
+processes the prompt and returns the response 
+'''   
 def customcompletion():
     response = llm_helper.get_completion(get_prompt())
     st.session_state['prompt_result']= response.encode().decode()
 
+'''
+
+'''
 def process_all(data):
     llm_helper.vector_store.delete_prompt_results('prompt*')
     data_to_process = data[data.filename.isin(st.session_state['selected_docs'])]
