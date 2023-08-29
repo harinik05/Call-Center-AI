@@ -10,13 +10,18 @@ def clear_summary():
     st.session_state['summary'] = ""
 
 '''
-
+It will take the custom text that the user puts in and generate a prompt based on the custom
+text that is being entered
 '''
 def get_custom_prompt():
     customtext = st.session_state['customtext']
     customprompt = "{}".format(customtext)
     return customprompt
 
+'''
+once the prompt is generated, the completion can be established using a response generated 
+to give results from the conversation
+'''
 def customcompletion():
     response = llm_helper.get_completion(get_custom_prompt())
     st.session_state['conv_result'] = response.encode().decode()
