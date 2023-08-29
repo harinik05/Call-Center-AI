@@ -3,6 +3,9 @@ import os
 import traceback
 from utilities.helper import LLMHelper
 
+'''
+get the prompt from the user and send it over to the 
+'''
 def get_prompt():
     return f"{st.session_state['doc_text']}\n{st.session_state['input_prompt']}"
    
