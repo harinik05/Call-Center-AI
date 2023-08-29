@@ -4,6 +4,11 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, g
 from dotenv import load_dotenv
 
 class AzureBlobStorageClient:
+
+    '''
+    constructor created to initialize the attributes and properties of an instance of class when 
+    made
+    '''
     def __init__(self, account_name: str = None, account_key: str = None, container_name: str = None):
 
         load_dotenv()
