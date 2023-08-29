@@ -3,9 +3,15 @@ import os
 import traceback
 from utilities.helper import LLMHelper
 
+'''
+clear summary function 
+'''
 def clear_summary():
     st.session_state['summary'] = ""
 
+'''
+
+'''
 def get_custom_prompt():
     customtext = st.session_state['customtext']
     customprompt = "{}".format(customtext)
