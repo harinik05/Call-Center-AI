@@ -102,6 +102,11 @@ class AzureBlobStorageClient:
         this is set to expire three hours from the current UTC time
         '''
         sas = generate_container_sas(self.account_name, self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
+        
+        '''
+        initializes two empty lists to collect information about the files and their 
+        conversion status
+        '''
         files = []
         converted_files = {}
         for blob in blob_list:
