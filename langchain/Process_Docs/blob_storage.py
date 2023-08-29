@@ -90,8 +90,17 @@ class AzureBlobStorageClient:
         attribute with the specific container in the Azure blob storage
         '''
         container_client = self.blob_service_client.get_container_client(self.container_name)
+
+        '''
+        this will be able to fetch the list of blobs within the specified container using the 
+        list blobs method from the container client
+        '''
         blob_list = container_client.list_blobs(include='metadata')
-        # sas = generate_blob_sas(account_name, container_name, blob.name,account_key=account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
+        
+        '''
+        Generates a SAS token for the container. This token allows read-only access (permission = "R) and
+        this is set to expire three hours from the current UTC time
+        '''
         sas = generate_container_sas(self.account_name, self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
         files = []
         converted_files = {}
