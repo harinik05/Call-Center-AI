@@ -53,25 +53,41 @@ deletes both the source file, converted file, and associated embeddings
 '''
 def delete_file_and_embeddings(filename=''):
     '''
-    checks if the data_files_embeddings is in the session state 
+    checks if the data_files_embeddings is in the session state. if this is not in the session state, it
+    will retrieve from redis (max = 1000 data)
     '''
     if 'data_files_embeddings' not in st.session_state:
         st.session_state['data_files_embeddings'] = llm_helper.get_all_documents(k=1000)
 
+    '''
+    Checks the filename and sees if the argument is empty. If it is, then it should add it in session 
+    state as a filename to delete
+    '''
     if filename == '':
-        filename = st.session_state['file_and_embeddings_to_drop'] # get the current selected filename
+        filename = st.session_state['file_and_embeddings_to_drop'] 
     
+    '''
+    Line searches for a dictionary in the session state list that matches the filename
+    '''
     file_dict = next((d for d in st.session_state['data_files'] if d['filename'] == filename), None)
 
+    '''
+    Condition to check if a valid file_dict is found. if file_dict is not empty, then there must be a 
+    file with specified filename in the knowledge base
+    '''
     if len(file_dict) > 0:
-        # delete source file
+        '''
+        initially deletes the source file and uses the blob client to do so
+        '''
         source_file = file_dict['filename']
         try:
             llm_helper.blob_client.delete_file(source_file)
         except Exception as e:
             st.error(f"Error deleting file: {source_file} - {e}")
 
-        # delete converted file
+        '''
+        if there is a converted file version that exists, it will delete this too
+        '''
         if file_dict['converted']:
             converted_file = 'converted/' + file_dict['filename'] + '.txt'
             try:
@@ -79,11 +95,15 @@ def delete_file_and_embeddings(filename=''):
             except Exception as e:
                 st.error(f"Error deleting file : {converted_file} - {e}")
 
-        # delete embeddings
+        '''
+        deletes the embeddings
+        '''
         if file_dict['embeddings_added']:
             delete_embeddings_of_file(parse.quote(filename))
     
-    # update the list of filenames to remove the deleted filename
+    '''
+    must update the session state with the status of the filenames
+    '''
     st.session_state['data_files'] = [d for d in st.session_state['data_files'] if d['filename'] != '{filename}']
 
 
