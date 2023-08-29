@@ -160,7 +160,6 @@ class AzureBlobStorageClient:
         return files
 
 
-
     def upsert_blob_metadata(self, file_name, metadata):
         blob_client = BlobServiceClient.from_connection_string(self.connect_str).get_blob_client(container=self.container_name, blob=file_name)
         # Read metadata from the blob
