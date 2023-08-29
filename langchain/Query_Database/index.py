@@ -57,15 +57,22 @@ try:
     llm_helper = LLMHelper()
 
     '''
-    
+    get all the documents from redis and put in session state
     '''
     st.session_state['data_embeddings'] = llm_helper.get_all_documents(k=1000)
 
     nb_embeddings = len(st.session_state['data_embeddings'])
-
+    '''
+    if the length is 0, then there are no embeddings
+    '''
     if nb_embeddings == 0:
         st.warning("No embeddings found. Go to the 'Add Document' tab to insert your docs.")
+    
+    
     else:
+        '''
+        Download embeddings
+        '''
         st.dataframe(st.session_state['data_embeddings'], use_container_width=True)
         st.text("")
         st.text("")
@@ -74,12 +81,19 @@ try:
         st.text("")
         st.text("")
         col1, col2, col3 = st.columns([3,1,3])
+        '''
+        delete embeddings by id
+        '''
         with col1:
             st.selectbox("Embedding id to delete", st.session_state['data_embeddings'].get('key',[]), key="embedding_to_drop")
             st.text("")
             st.button("Delete embedding", on_click=delete_embedding)
         with col2:
             st.text("")
+
+        '''
+        delete embeddings for the file 
+        '''
         with col3:
             st.selectbox("File name to delete its embeddings", set(st.session_state['data_embeddings'].get('filename',[])), key="file_to_drop")
             st.text("")
