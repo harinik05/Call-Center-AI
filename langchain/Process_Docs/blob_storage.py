@@ -109,8 +109,18 @@ class AzureBlobStorageClient:
         '''
         files = []
         converted_files = {}
+
+        '''
+        this loop iterates through each blob in the blob list 
+        '''
         for blob in blob_list:
+            '''
+            this condition checks that the blob doesn't start with converted
+            '''
             if not blob.name.startswith('converted/'):
+                '''
+                a dictionary is created with the following information;
+                '''
                 files.append({
                     "filename" : blob.name,
                     "converted": blob.metadata.get('converted', 'false') == 'true' if blob.metadata else False,
