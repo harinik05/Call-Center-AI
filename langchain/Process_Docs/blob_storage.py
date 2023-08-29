@@ -8,11 +8,21 @@ class AzureBlobStorageClient:
     '''
     constructor created to initialize the attributes and properties of an instance of class when 
     made
+    @input: account name, account key, container name
+    All of the input parameters are initialized with value of None, which means that you can 
+    create the instance of this class without having to provide these params explicitly
     '''
     def __init__(self, account_name: str = None, account_key: str = None, container_name: str = None):
 
+        '''
+        Loads the env variables from .env file into an applications environment. Common for 
+        maintaining sensitive information like account names and keys
+        '''
         load_dotenv()
 
+        '''
+        
+        '''
         self.account_name : str = account_name if account_name else os.getenv('BLOB_ACCOUNT_NAME')
         self.account_key : str = account_key if account_key else os.getenv('BLOB_ACCOUNT_KEY')
         self.connect_str : str = f"DefaultEndpointsProtocol=https;AccountName={self.account_name};AccountKey={self.account_key};EndpointSuffix=core.windows.net"
