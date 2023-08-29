@@ -21,7 +21,14 @@ class AzureBlobStorageClient:
         load_dotenv()
 
         '''
-        
+        if its provided as an argument, it will assign the value for the variable using that. 
+        If not, then it will look in the env variables to check for this variable
+        1. account name
+        2. account key
+        3. container name
+        4. formatted value of connected string for Azure Blob Storage
+            -> derived from account name and account key
+        5. service client - creates a client for interacting with Azure Blob storage 
         '''
         self.account_name : str = account_name if account_name else os.getenv('BLOB_ACCOUNT_NAME')
         self.account_key : str = account_key if account_key else os.getenv('BLOB_ACCOUNT_KEY')
