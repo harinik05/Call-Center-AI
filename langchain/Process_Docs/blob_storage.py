@@ -120,6 +120,12 @@ class AzureBlobStorageClient:
             if not blob.name.startswith('converted/'):
                 '''
                 a dictionary is created with the following information;
+                1. filename: name of the blob
+                2. converted: boolean indicating if the blob is marked as converted (based on the metadata)
+                3. embeddings added: boolean indicating if embeddings have been added (based on metadata)
+                4. full path: URL that includes the SAS token for accessing the blob
+                5. converted file name: name of the converted version fo the file (if its available in metadata)
+                6. conveted path: initially empty string
                 '''
                 files.append({
                     "filename" : blob.name,
