@@ -60,7 +60,9 @@ class AzureBlobStorageClient:
     we're uploading), convert type (default value is pdf) 
     '''
     def upload_file(self, bytes_data, file_name, content_type='application/pdf'):
-        # Create a blob client using the local file name as the name for the blob
+        '''
+        initialize the blob_client to be used which will take in the container and file name (file that we're uploading)
+        '''
         blob_client = self.blob_service_client.get_blob_client(container=self.container_name, blob=file_name)
         # Upload the created file
         blob_client.upload_blob(bytes_data, overwrite=True, content_settings=ContentSettings(content_type=content_type))
