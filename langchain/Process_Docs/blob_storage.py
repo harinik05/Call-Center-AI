@@ -41,8 +41,17 @@ class AzureBlobStorageClient:
     @input: file name (name of the file that we want to delete from Azure Blob Storage)
     '''
     def delete_file(self, file_name):
+        '''
+        Initialize the blob client object (instance of this class)
+        retrieves a client for a specific blob by taking the container (where the blob is located)
+        and name of the blob we want to delete
+        '''
         blob_client = self.blob_service_client.get_blob_client(container=self.container_name, blob=file_name)
+        '''
+        Deletes the blob based on the initialization done for the blob client 
+        '''
         blob_client.delete_blob()
+
 
     def upload_file(self, bytes_data, file_name, content_type='application/pdf'):
         # Create a blob client using the local file name as the name for the blob
