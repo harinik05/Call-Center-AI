@@ -79,8 +79,16 @@ class AzureBlobStorageClient:
         '''
         return blob_client.url + '?' + generate_blob_sas(self.account_name, self.container_name, file_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
 
+    '''
+    this function is responsible for retrieving a list of files (blobs) from the Azure Blob Storage
+    container, gathering metadata about these files (blobs) form the Azure Blob Storage, and 
+    creating a list of dictionaries containing information about each file
+    '''
     def get_all_files(self):
-        # Get all files in the container from Azure Blob Storage
+        '''
+        initializes the client object using the get client method of blob service client 
+        attribute with the specific container in the Azure blob storage
+        '''
         container_client = self.blob_service_client.get_container_client(self.container_name)
         blob_list = container_client.list_blobs(include='metadata')
         # sas = generate_blob_sas(account_name, container_name, blob.name,account_key=account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
