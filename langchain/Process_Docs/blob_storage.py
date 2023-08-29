@@ -167,11 +167,16 @@ class AzureBlobStorageClient:
     '''
     def upsert_blob_metadata(self, file_name, metadata):
         '''
-        
+        Initializes the blob client object that represents the specific blob you want 
+        to work with 
         '''
         blob_client = BlobServiceClient.from_connection_string(self.connect_str).get_blob_client(container=self.container_name, blob=file_name)
-        # Read metadata from the blob
+        
+        '''
+        retrieves the existing metadata associated with the blob
+        '''
         blob_metadata = blob_client.get_blob_properties().metadata
+        
         # Update metadata
         blob_metadata.update(metadata)
         # Add metadata to the blob
