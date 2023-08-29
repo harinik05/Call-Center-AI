@@ -106,14 +106,24 @@ def delete_file_and_embeddings(filename=''):
     '''
     st.session_state['data_files'] = [d for d in st.session_state['data_files'] if d['filename'] != '{filename}']
 
-
+'''
+Responsible for deleting all the files and their associated embeddings from a knowledge base
+'''
 def delete_all_files_and_embeddings():
+    '''
+    contains information about the files present in the knowledge base
+    '''
     files_list = st.session_state['data_files']
+    '''
+    delete the file specified by the dictionary;s filename and embeddings
+    '''
     for filename_dict in files_list:
         delete_file_and_embeddings(filename_dict['filename'])
 
 try:
-    # Set page layout to wide screen and menu item
+    '''
+    style for the page
+    '''
     menu_items = {
 	'Get help': None,
 	'Report a bug': None,
@@ -123,6 +133,7 @@ try:
 	Document Reader Sample Demo.
 	'''
     }
+
     st.set_page_config(layout="wide", menu_items=menu_items)
 
     hide_streamlit_style = """
@@ -135,7 +146,9 @@ try:
 
     llm_helper = LLMHelper()
 
-
+    '''
+    Initializes 
+    '''
     st.session_state['data_files'] = llm_helper.blob_client.get_all_files()
     st.session_state['data_files_embeddings'] = llm_helper.get_all_documents(k=1000)
 
