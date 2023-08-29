@@ -3,10 +3,17 @@ from utilities.helper import LLMHelper
 import os
 import traceback
 
+'''
+summarize the document by waiting for the prompt completion and put the summary
+in the response
+'''
 def summarize():
     response = llm_helper.get_completion(get_prompt())
     st.session_state['summary'] = response
 
+'''
+reset the summary
+'''
 def clear_summary():
     st.session_state['summary'] = ""
 
