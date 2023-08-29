@@ -142,14 +142,21 @@ class AzureBlobStorageClient:
                 converted_files[blob.name] = f"https://{self.account_name}.blob.core.windows.net/{self.container_name}/{blob.name}?{sas}"
 
         '''
-        
+        after collecting the informatino about the files, it iterates through the files list
         '''
         for file in files:
+            '''
+            it checks if the converted file exist in the dictionary. if yes, it marks the metadata
+            with a true tag and puts the path name corresponding to the url
+            '''
             converted_filename = file.pop('converted_filename', '')
             if converted_filename in converted_files:
                 file['converted'] = True
                 file['converted_path'] = converted_files[converted_filename]
+
+        '''
         
+        ''' 
         return files
 
     def upsert_blob_metadata(self, file_name, metadata):
