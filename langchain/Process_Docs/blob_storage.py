@@ -36,6 +36,10 @@ class AzureBlobStorageClient:
         self.container_name : str = container_name if container_name else os.getenv('BLOB_CONTAINER_NAME')
         self.blob_service_client : BlobServiceClient = BlobServiceClient.from_connection_string(self.connect_str)
 
+    '''
+    Function to delete the files 
+    @input: file name (name of the file that we want to delete from Azure Blob Storage)
+    '''
     def delete_file(self, file_name):
         blob_client = self.blob_service_client.get_blob_client(container=self.container_name, blob=file_name)
         blob_client.delete_blob()
