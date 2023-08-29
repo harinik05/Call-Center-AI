@@ -64,9 +64,14 @@ class AzureBlobStorageClient:
         initialize the blob_client to be used which will take in the container and file name (file that we're uploading)
         '''
         blob_client = self.blob_service_client.get_blob_client(container=self.container_name, blob=file_name)
-        # Upload the created file
+        
+        '''
+        The upload_blob function in the blob client will upload the object with bytes data
+        to the specific blob
+        It also takes care of any duplicates that exist by overwriting it
+        '''
         blob_client.upload_blob(bytes_data, overwrite=True, content_settings=ContentSettings(content_type=content_type))
-        # Generate a SAS URL to the blob and return it
+        
         return blob_client.url + '?' + generate_blob_sas(self.account_name, self.container_name, file_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
 
     def get_all_files(self):
