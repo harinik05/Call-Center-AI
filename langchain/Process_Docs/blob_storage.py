@@ -54,7 +54,9 @@ class AzureBlobStorageClient:
 
 
     '''
-    function will 
+    function will upload the binary data (bytes) to Azure Blob Storage container and 
+    returns a SAS (Shared Access Signature) URL for the uploaded file
+    @input:   
     '''
     def upload_file(self, bytes_data, file_name, content_type='application/pdf'):
         # Create a blob client using the local file name as the name for the blob
