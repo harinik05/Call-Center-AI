@@ -21,7 +21,9 @@ functionality of the base redis class
 '''
 class RedisExtended(Redis):
 
-    
+    '''
+    Constructor of the RedisExtended class is defined with some of these params
+    '''
     def __init__(
         self,
         redis_url: str,
@@ -29,6 +31,10 @@ class RedisExtended(Redis):
         embedding_function: Callable,
         **kwargs: Any,
     ):
+        
+        '''
+        
+        '''
         super().__init__(redis_url, index_name, embedding_function)
         
         # Check if index exists
