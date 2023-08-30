@@ -17,3 +17,7 @@ Retrieval-Augmented Generation (RAG) is a powerful technique in Natural Language
 ![Untitled Diagram-Page-2 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/414e6821-532c-4f48-9fa6-af1b4561cb3c)
 
 In the depicted illustration, this design pattern is formed by integrating retrieval and generation methods. The data is first stored in the knowledge base and then transferred to the vector database. Subsequently, it is retrieved and employed by the Large Language Model (LLM) to craft the given input. Following this analysis, it is used to produce the response for users.
+
+## Data Ingestion
+Azure Blob Storage is a cloud-based object storage service provided by Microsoft Azure. It is designed to store and manage unstructured data such as documents, images, videos, backups, and more. Azure Blob Storage offers a highly scalable, secure, and durable solution for storing large amounts of data in the cloud. There were primarily two types of storage accounts types that were used: container (blobs) and queue (messages). 
+
