@@ -14,9 +14,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     upload a local file to Azure blob storage
     '''
     handler.upload_file("iphone_user_guide_apple.pdf","uploaded_manual.pdf")
-    
+
+    # Get information about all files in the container
+    files_info = handler.get_all_files()
+    for file_info in files_info:
+        print(file_info)
+
+    # Delete a file from the container
+    handler.delete_file('uploaded_file.pdf')
     # Parse the request and get the file content
     file_content = req.get_body()
+
+    #-----
 
     # Set Azure Blob Storage connection details
     connection_string = os.environ["AzureWebJobsStorage"]
