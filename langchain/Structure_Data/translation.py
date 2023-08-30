@@ -37,8 +37,6 @@ class AzureTranslatorClient:
     '''
     def translate(self, text, language='en'):
 
-        '''
-        '''
         headers = {
             'Ocp-Apim-Subscription-Key': self.translate_key,
             'Ocp-Apim-Subscription-Region': self.translate_region,
@@ -48,6 +46,14 @@ class AzureTranslatorClient:
         body = [{
             'text': text
         }]
+
+        '''
+        Sends a HTTP post request to the translator's service detect endpoint to determine the 
+        language of input text
+
+        If the detected language is different from the target language, it sends another HTTP POST
+        request to the translate endpoint to perform the translation
+        '''
         request = requests.post(self.detect_endpoint, params=params, headers=headers, json=body)
         response = request.json()
         if (response[0]['language'] != language):
