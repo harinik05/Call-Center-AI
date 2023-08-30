@@ -13,7 +13,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     '''
     upload a local file to Azure blob storage
     '''
-    handler.upload_file()
+    handler.upload_file("iphone_user_guide_apple.pdf","uploaded_manual.pdf")
+    
     # Parse the request and get the file content
     file_content = req.get_body()
 
