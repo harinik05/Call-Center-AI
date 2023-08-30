@@ -4,6 +4,16 @@ from azure.storage.blob import BlobServiceClient, ContentSettings
 from blob_storage import AzureBlobStorageClient
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
+    
+    '''
+    initialize the handler with the class name (create an instance to use all its methods)
+    '''
+    handler = AzureBlobStorageClient()
+
+    '''
+    upload a local file to Azure blob storage
+    '''
+    handler.upload_file()
     # Parse the request and get the file content
     file_content = req.get_body()
 
