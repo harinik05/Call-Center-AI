@@ -10,7 +10,12 @@ instance variable and a method to retrieve the instance.
 Optimized the code by creating only one singleton client to minimize 
 this overhead, resulting in faster interactions with the Azure blob storage
 
-This also involves the use of encapsulation
+This also involves the use of encapsulation, you will simolify the initialization
+process. Allows same authentication credentials used consistently across
+all function invocations
+
+FUTURE: Retry policies common among all functions (also harder to identify 
+the errors)
 '''
 class SingletonAzureBlobStorageHandler:
     _instance = None
