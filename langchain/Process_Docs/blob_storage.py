@@ -191,10 +191,13 @@ class AzureBlobStorageClient:
         blob_client.set_blob_metadata(metadata= blob_metadata)
 
     '''
-    
+    generates the shared access signature URL for the Azure Blob Storage container and returns it
     '''
     def get_container_sas(self):
-        # Generate a SAS URL to the container and return it
+        '''
+        Generates a SAS token for the Azure bLOB STORAGE CONTAINER and indicated using the ? to show
+        that this is the standard way to start the query of a string in the URL
+        '''
         return "?" + generate_container_sas(account_name= self.account_name, container_name= self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=1))
 
     def get_blob_sas(self, file_name):
