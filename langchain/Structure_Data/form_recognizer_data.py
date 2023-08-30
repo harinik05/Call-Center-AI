@@ -67,11 +67,6 @@ class AzureFormRecognizerClient:
         results = []
 
         '''
-        initializes an empty string for temporary storage of content from each page
-        '''
-        page_result = ''
-
-        '''
         Iterates through the paragraphs 
         determines the page number in which the paragraph appears in. It also calculates an 
         output file id based on the page number and embeddings attribute. The calculation seems to be used 
@@ -89,6 +84,10 @@ class AzureFormRecognizerClient:
             if p.role not in self.section_to_exclude:
                 results[output_file_id] += f"{p.content}\n"
 
+        '''
+        similar idea for tables. determines the page number in which the table is
+        present. calculates the output id. processes the cells and puts it into the results array
+        '''
         for t in layout.tables:
             page_number = t.bounding_regions[0].page_number
             output_file_id = int((page_number - 1 ) / self.pages_per_embeddings)
