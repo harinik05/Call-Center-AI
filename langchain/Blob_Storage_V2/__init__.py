@@ -20,12 +20,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     handler.handler.update_blob_metadata('iphone_user_guide_apple.pdf', metadata)
 
     # Generate a SAS URL for the container
-    container_sas_url = handler.handler.generate_container_sas()
+    container_sas_url = handler.handler.retrieve_sas_container()
     print(f'Container SAS URL: {container_sas_url}')
 
     # Generate a SAS URL for a specific blob
     blob_name = 'uploaded_file.pdf'
-    blob_sas_url = handler.handler.generate_blob_sas(blob_name)
+    blob_sas_url = handler.handler.retrieve_sas_blob(blob_name)
     print(f'Blob SAS URL: {blob_sas_url}')
 
     return func.HttpResponse("File uploaded successfully.", status_code=200)
