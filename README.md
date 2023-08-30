@@ -52,6 +52,19 @@ Improved Security Measures: Uploading the file as a binary data instead of actua
 Block blobs were employed due to the large size of the file (the Apple iPhone manual) and for security considerations. The file was converted into binary data for storage. This functionality was integrated into the `__init.py__` main method as part of Azure Functions. A POST HTTP request is dispatched to upload the file and its metadata content, and a success message is obtained upon successful completion. This design was implemented using the Singleton pattern, employing the `get_instance` class method to eliminate the need for client reinitialization for each operation, thus enhancing efficiency and resource management.
 ![Untitled Diagram-Page-3 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/674fee70-1561-40a3-a68c-3dd3adf787de)
 
+### Processing Chat History Files (Repetitive Data)
+The conversation history between the user and OpenAI, likely saved as a text file, requires processing. This involves treating it as a list of documents and preparing it for inclusion in the vector store. The process begins by invoking the `add_embeddings_preprocess` function, responsible for encoding, segmenting, and refining the data before its integration into the vector store. Initially, only the preprocessing phase is activated. Upon completion, a metadata tag, "embeddings_added," is marked as "true," indicating readiness for addition to the store. If the filetype is not .txt, then this will be converted and a new metatag for this will be established. This is how the pre-processing is done with the documents in txt format:
+
+1. **Document Loading**: It seems that documents are initially loaded from a `source_url` using `self.document_loaders(source_url).load()`. This suggests that documents are fetched from some source.
+
+2. **Encoding Conversion**: For each document in the list, there is an attempt to convert its `page_content` to UTF-8 encoding. If the document content can be encoded using both "iso-8859-1" and "latin-1" encodings without error, it is then converted to UTF-8 and any non-UTF-8 characters are ignored (via the `errors="ignore"` parameter). This ensures that the text content is in a consistent and compatible encoding.
+
+3. **Document Splitting**: After encoding conversion, the code uses a `text_splitter` (likely a custom module or function) to split the documents into smaller chunks. It seems that this step is related to text processing.
+
+4. **Non-ASCII Character Removal**: A regular expression (`pattern`) is used to identify and remove specific non-ASCII characters from the content of each document. These characters include control characters, non-breaking spaces, and others.
+
+5. **Key Generation**: For each document, a unique key is generated. This key is based on a combination of the `source_url`, the document index (`i`), and a SHA-1 hash of this combination. The key is likely used for identifying and retrieving the document later.
+
 
 
 
