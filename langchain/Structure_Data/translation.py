@@ -31,8 +31,14 @@ class AzureTranslatorClient:
             self.detect_endpoint = urllib.parse.urljoin(self.translate_endpoint, f"/translator/text/v3.0/detect?api-version={self.api_version}")
             self.translate_endpoint = urllib.parse.urljoin(self.translate_endpoint, f"/translator/text/v3.0/translate?api-version={self.api_version}")
 
-
+    '''
+    This method is used to translate text from one language to another 
+    @input: text, language (target language to which text should be translated to)
+    '''
     def translate(self, text, language='en'):
+
+        '''
+        '''
         headers = {
             'Ocp-Apim-Subscription-Key': self.translate_key,
             'Ocp-Apim-Subscription-Region': self.translate_region,
