@@ -1,6 +1,15 @@
 """Wrapper around Azure Cognitive Search."""
 from __future__ import annotations
-
+'''
+Imports: The code imports various Python libraries and modules required for interacting with Azure Cognitive Search and performing related tasks. Some of the important imports include:
+logging: This is used for logging messages and information.
+uuid: Used for generating universally unique identifiers (UUIDs).
+pydantic: A data validation and parsing library.
+os: Allows access to operating system functionality, used for reading environment variables.
+numpy: A library for numerical computing, used for handling embeddings.
+azure: A Python SDK for Azure services.
+langchain: Custom modules related to language processing.
+'''
 import json
 import logging
 import uuid
@@ -52,6 +61,8 @@ FIELDS_METADATA = os.environ.get("AZURESEARCH_FIELDS_TAG", "metadata")
 MAX_UPLOAD_BATCH_SIZE = 1000
 MAX_DELETE_BATCH_SIZE = 1000
 
+'''
+'''
 def get_search_client(endpoint: str, key: str, index_name: str, semantic_configuration_name:str = None) -> SearchClient:
     if key is None:
         credential = DefaultAzureCredential()
