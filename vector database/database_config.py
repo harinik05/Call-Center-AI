@@ -136,5 +136,8 @@ class RedisExtended(Redis):
         else:
             return pd.DataFrame()
 
+    '''
+    deletes the results from the prompt
+    '''
     def delete_prompt_results(self, prefix="prompt*"):
         self.delete_keys_pattern(pattern=prefix)
