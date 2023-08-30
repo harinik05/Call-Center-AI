@@ -1,8 +1,7 @@
-
 import os
 import azure.functions as func
-from form_recognizer_client import AzureFormRecognizerClient  # Replace with the actual module name
-from translator_client import AzureTranslatorClient  # Replace with the actual module name
+from form_recognizer_client import AzureFormRecognizerClient  
+from translator_client import AzureTranslatorClient  
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     # Initialize the Form Recognizer client

@@ -70,28 +70,4 @@ class AzureTranslatorClient:
         else:
             return text
         
-    '''
-    Method to retriev the list of available languages for translation from the Azure 
-    Translator service
-    '''
-    def get_available_languages(self):
-        '''
-        if vNet deploymenet is enabled, it uses the predefined set of default languiages
-        '''
-        if os.getenv('VNET_DEPLOYMENT', 'false') == 'true':
-            available_languages = default_languages['translation']
-        else:
-            '''
-            if not enabled, it will use the HTTP GET request to the Azure Translator service 
-            language API endpoint to retrieve the list of available languages
-            '''
-            r = requests.get(f"https://api.cognitive.microsofttranslator.com/languages?api-version={self.api_version}&scope=translation")
-            available_languages = r.json()['translation']
-        
-        '''
-        parses the response and creates a dictionary mapping language names to language codes
-        '''
-        languages = {}
-        for k,v  in available_languages.items():
-            languages[v['name']] =  k
-        return languages
+   
