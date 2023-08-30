@@ -12,7 +12,11 @@ class AzureTranslatorClient:
         load_dotenv()
 
         '''
-        
+        initializes the azure translator client object and puts all the information such as
+        the key, region, endpoint, and version
+
+        depending on whether Virtual network deployement is specified, the endpoint URLs
+        are constructed differently using the urllib.parse.urljoin
         '''
 
         self.translate_key = translate_key if translate_key else os.getenv('TRANSLATE_KEY')
