@@ -123,6 +123,8 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
         )
         
         '''
+        defining a configuration for vector search within an Azure cognitive
+        vector search
         '''
         semantic_settings = None if semantic_configuration_name is None else SemanticSettings(
             configurations=[SemanticConfiguration(
