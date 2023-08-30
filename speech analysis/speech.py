@@ -77,3 +77,22 @@ def recognize_speech_from_file(filename):
     speech_recognizer.stop_continuous_recognition()
 
     return recognized_text_list
+
+def extract_questions_and_prompts(recognized_text_list):
+    questions = {}
+    prompts = {}
+    
+    for text in recognized_text_list:
+        # Split the text into sentences
+        sentences = re.split(r'[.!?]', text)
+        
+        for sentence in sentences:
+            # Check if the sentence is a question (ends with a question mark)
+            if sentence.strip().endswith('?'):
+                # Store the question in the 'questions' dictionary
+                questions[len(questions) + 1] = sentence.strip()
+            else:
+                # Store the non-question (prompt) in the 'prompts' dictionary
+                prompts[len(prompts) + 1] = sentence.strip()
+    
+    return questions, prompts
