@@ -64,6 +64,10 @@ class RedisExtended(Redis):
         except:
             return False
 
+    '''
+    Deletes the keys (data) from Redis either specified individually or based on 
+    some kind of a pattern
+    '''
     def delete_keys(self, keys: List[str]) -> None:
         for key in keys:
             self.client.delete(key)
@@ -72,6 +76,8 @@ class RedisExtended(Redis):
         keys = self.client.keys(pattern)
         self.delete_keys(keys)
 
+    '''
+    '''
     def create_index(self, prefix = "doc", distance_metric:str="COSINE"):
         content = TextField(name="content")
         metadata = TextField(name="metadata")
