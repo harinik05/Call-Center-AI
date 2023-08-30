@@ -24,10 +24,35 @@ Azure Blob Storage is a cloud-based object storage service provided by Microsoft
 ### Initialization of Data Ingestion Process
 There is a mock client created for Azure Blob Storage, which is initialized with the following information in the constructor: 
 
-| Parameters | Value | Variable Name |
+| Parameters | Env Var. Value | Variable Name |
 | ---------------- | ---------------- |---------------- |
-| Account Name  | Content Cell  |Content Cell  |
-| Account Key  | Content Cell  |Content Cell  |
-| Connection String (URL) | Content Cell  |Content Cell  |
-| Container Name  | Content Cell  |Content Cell  |
-| Blob Client | Content Cell  |Content Cell  |
+| Account Name  | AZURE_BLOB_ACCOUNT_NAME  |blob_acc_name  |
+| Account Key  | AZURE_BLOB_ACCOUNT_NAME  |blob_acc_key  |
+| Connection String (URL) |  |blob_connection_url  |
+| Container Name  | AZURE_BLOB_CONTAINER_NAME |blob_container_name  |
+| Blob Client |   |blob_client  |
+| File SAS (Queue) |   |SAS_queue  |
+
+
+1. **`__init__`**: This is the constructor method for the `AzureBlobStorageClient` class. It initializes the attributes of an instance of the class, including account name, account key, and container name. It also loads environment variables from a .env file.
+
+2. **`delete_file`**: This method deletes a file (blob) from the Azure Blob Storage container. It takes the file name as an input and uses the Azure SDK to delete the specified blob.
+
+3. **`upload_file`**: This method uploads binary data (bytes) to the Azure Blob Storage container. It takes the binary data, file name, and optional content type as inputs. It uses the Azure SDK to upload the data and generates a Shared Access Signature (SAS) URL for the uploaded file.
+
+4. **`get_all_files`**: This method retrieves a list of files (blobs) from the Azure Blob Storage container, including metadata about each file. It creates a list of dictionaries containing information about each file, such as filename, conversion status, and URLs for access.
+
+5. **`upsert_blob_metadata`**: This method updates or inserts metadata associated with a specific file (blob) in the Azure Blob Storage container. It takes the file name and metadata as inputs and uses the Azure SDK to update the metadata.
+
+6. **`get_container_sas`**: This method generates and returns a Shared Access Signature (SAS) URL for the entire Azure Blob Storage container. It allows read-only access to the container and includes an expiry time.
+
+7. **`get_blob_sas`**: This method generates and returns a Shared Access Signature (SAS) URL for a specific blob (file) in the Azure Blob Storage container. It allows read-only access to the blob and includes an expiry time.
+
+Improved Security Measures: Uploading the file as a binary data instead of actual file content to Blob storage, and 
+
+
+
+
+
+
+
