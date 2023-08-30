@@ -21,3 +21,10 @@ In the depicted illustration, this design pattern is formed by integrating retri
 ## Data Ingestion
 Azure Blob Storage is a cloud-based object storage service provided by Microsoft Azure. It is designed to store and manage unstructured data such as documents, images, videos, backups, and more. Azure Blob Storage offers a highly scalable, secure, and durable solution for storing large amounts of data in the cloud. There were primarily two types of storage accounts types that were used: container (blobs) and queue (messages). 
 
+### Initialization of Data Ingestion Process
+There is a mock client created for Azure Blob Storage, which is initialized with the following information in the constructor: 
+
+| Parameters | Value | Variable Name |
+| ------------- | ------------- |------------- |
+| Content Cell  | Content Cell  |Content Cell  |
+| Content Cell  | Content Cell  |Content Cell  |
