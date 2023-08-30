@@ -61,10 +61,24 @@ class AzureFormRecognizerClient:
         layout = poller.result()
 
         '''
-        
+        the code initializes the empty list called results to store the extracted content
+        from the document
         '''
         results = []
+
+        '''
+        initializes an empty string for temporary storage of content from each page
+        '''
         page_result = ''
+
+        '''
+        Iterates through the paragraphs 
+        determines the page number in which the paragraph appears in. It also calculates an 
+        output file id based on the page number and embeddings attribute. The calculation seems to be used 
+        for grouping paragraphs into output files
+        rhe paragraphs content is appended into the results list, based on the output file id. If the 
+        section role of the paragraph is not in the section to exclude, then we can add into the list
+        '''
         for p in layout.paragraphs:
             page_number = p.bounding_regions[0].page_number
             output_file_id = int((page_number - 1 ) / self.pages_per_embeddings)
