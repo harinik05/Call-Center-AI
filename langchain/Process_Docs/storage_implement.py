@@ -38,22 +38,5 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     blob_sas_url = handler.generate_blob_sas(blob_name)
     print(f'Blob SAS URL: {blob_sas_url}')
 
-    #--
-
-    # Set Azure Blob Storage connection details
-    connection_string = os.environ["AzureWebJobsStorage"]
-    container_name = "your_container_name"
-
-    # Initialize BlobServiceClient
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    container_client = blob_service_client.get_container_client(container_name)
-
-    # Define the blob name and content type
-    blob_name = "uploaded_file.pdf"
-    content_type = "application/pdf"
-
-    # Upload the file to Blob Storage
-    blob_client = container_client.get_blob_client(blob_name)
-    blob_client.upload_blob(file_content, content_settings=ContentSettings(content_type=content_type))
 
     return func.HttpResponse("File uploaded successfully.", status_code=200)
