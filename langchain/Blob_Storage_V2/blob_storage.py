@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_blob_sas, generate_container_sas, ContentSettings
+from azure.storage.blob import BlobServiceClient, generate_blob_sas, generate_container_sas, ContentSettings
 from dotenv import load_dotenv
 
 class AzureBlobStorageClient:
@@ -12,7 +12,7 @@ class AzureBlobStorageClient:
     All of the input parameters are initialized with value of None, which means that you can 
     create the instance of this class without having to provide these params explicitly
     '''
-    def __init__(self, account_name: str = None, account_key: str = None, container_name: str = None):
+    def __init__(self, blob_acc_name: str = None, blob_acc_key: str = None, container_name: str = None):
 
         '''
         Loads the env variables from .env file into an applications environment. Common for 
@@ -30,36 +30,20 @@ class AzureBlobStorageClient:
             -> derived from account name and account key
         5. service client - creates a client for interacting with Azure Blob storage 
         '''
-        self.account_name : str = account_name if account_name else os.getenv('BLOB_ACCOUNT_NAME')
-        self.account_key : str = account_key if account_key else os.getenv('BLOB_ACCOUNT_KEY')
-        self.connect_str : str = f"DefaultEndpointsProtocol=https;AccountName={self.account_name};AccountKey={self.account_key};EndpointSuffix=core.windows.net"
+        self.blob_acc_name : str = blob_acc_name if blob_acc_name else os.getenv('BLOB_ACCOUNT_NAME')
+        self.blob_acc_key : str = blob_acc_key if blob_acc_key else os.getenv('BLOB_ACCOUNT_KEY')
+        self.blob_connection_url : str = f"DefaultEndpointsProtocol=https;AccountName={self.blob_acc_name};AccountKey={self.blob_acc_key};EndpointSuffix=core.windows.net"
         self.container_name : str = container_name if container_name else os.getenv('BLOB_CONTAINER_NAME')
-        self.blob_service_client : BlobServiceClient = BlobServiceClient.from_connection_string(self.connect_str)
+        self.blob_service_client : BlobServiceClient = BlobServiceClient.from_connection_string(self.blob_connection_url)
 
-    '''
-    Function to delete the files 
-    @input: file name (name of the file that we want to delete from Azure Blob Storage)
-    '''
-    def delete_file(self, file_name):
-        '''
-        Initialize the blob client object (instance of this class)
-        retrieves a client for a specific blob by taking the container (where the blob is located)
-        and name of the blob we want to delete
-        '''
-        blob_client = self.blob_service_client.get_blob_client(container=self.container_name, blob=file_name)
-        '''
-        Deletes the blob based on the initialization done for the blob client 
-        '''
-        blob_client.delete_blob()
-
-
+   
     '''
     function will upload the binary data (bytes) to Azure Blob Storage container and 
     returns a SAS (Shared Access Signature) URL for the uploaded file
     @input: bytes data (binary data that needs to be uploaded to Blob), file name (given to the file
     we're uploading), convert type (default value is pdf) 
     '''
-    def upload_file(self, bytes_data, file_name, content_type='application/pdf'):
+    def upload_file_metadata(self, bytes_data, file_name, content_type='application/pdf'):
         '''
         initialize the blob_client to be used which will take in the container and file name (file that we're uploading)
         '''
@@ -77,14 +61,14 @@ class AzureBlobStorageClient:
         ? is used to seperate the base URL from the SAS token 
         SAS url can be used to provide temporary access to the uploaded file
         '''
-        return blob_client.url + '?' + generate_blob_sas(self.account_name, self.container_name, file_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
+        return blob_client.url + '?' + generate_blob_sas(self.blob_acc_name, self.container_name, file_name,account_key=self.blob_acc_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
 
     '''
     this function is responsible for retrieving a list of files (blobs) from the Azure Blob Storage
     container, gathering metadata about these files (blobs) form the Azure Blob Storage, and 
     creating a list of dictionaries containing information about each file
     '''
-    def get_all_files(self):
+    def obtain_file_information(self):
         '''
         initializes the client object using the get client method of blob service client 
         attribute with the specific container in the Azure blob storage
@@ -101,7 +85,7 @@ class AzureBlobStorageClient:
         Generates a SAS token for the container. This token allows read-only access (permission = "R) and
         this is set to expire three hours from the current UTC time
         '''
-        sas = generate_container_sas(self.account_name, self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
+        sas = generate_container_sas(self.blob_acc_name, self.container_name,account_key=self.blob_acc_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=3))
         
         '''
         initializes two empty lists to collect information about the files and their 
@@ -131,7 +115,7 @@ class AzureBlobStorageClient:
                     "filename" : blob.name,
                     "converted": blob.metadata.get('converted', 'false') == 'true' if blob.metadata else False,
                     "embeddings_added": blob.metadata.get('embeddings_added', 'false') == 'true' if blob.metadata else False,
-                    "fullpath": f"https://{self.account_name}.blob.core.windows.net/{self.container_name}/{blob.name}?{sas}",
+                    "fullpath": f"https://{self.blob_acc_name}.blob.core.windows.net/{self.container_name}/{blob.name}?{sas}",
                     "converted_filename": blob.metadata.get('converted_filename', '') if blob.metadata else '',
                     "converted_path": ""
                     })
@@ -139,7 +123,7 @@ class AzureBlobStorageClient:
                 '''
                 for the files that are already converted it will add them to the converted files dictionary
                 '''
-                converted_files[blob.name] = f"https://{self.account_name}.blob.core.windows.net/{self.container_name}/{blob.name}?{sas}"
+                converted_files[blob.name] = f"https://{self.blob_acc_name}.blob.core.windows.net/{self.container_name}/{blob.name}?{sas}"
 
         '''
         after collecting the informatino about the files, it iterates through the files list
@@ -165,7 +149,7 @@ class AzureBlobStorageClient:
     Container
     @input: file name, metadata
     '''
-    def upsert_blob_metadata(self, file_name, metadata):
+    def insert_metadata(self, file_name, metadata):
         '''
         Initializes the blob client object that represents the specific blob you want 
         to work with 
@@ -193,14 +177,14 @@ class AzureBlobStorageClient:
     '''
     generates the shared access signature URL for the Azure Blob Storage container and returns it
     '''
-    def get_container_sas(self):
+    def retrieve_sas_container(self):
         '''
         Generates a SAS token for the Azure bLOB STORAGE CONTAINER and indicated using the ? to show
         that this is the standard way to start the query of a string in the URL
         '''
-        return "?" + generate_container_sas(account_name= self.account_name, container_name= self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=1))
+        return "?" + generate_container_sas(account_name= self.blob_acc_name, container_name= self.container_name,account_key=self.blob_acc_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=1))
     '''
     this is the same as the last function (its for the sas of the blob)
     '''
-    def get_blob_sas(self, file_name):
-        return f"https://{self.account_name}.blob.core.windows.net/{self.container_name}/{file_name}" + "?" + generate_blob_sas(account_name= self.account_name, container_name=self.container_name, blob_name= file_name, account_key= self.account_key, permission='r', expiry=datetime.utcnow() + timedelta(hours=1))
+    def retrieve_sas_blob(self, file_name):
+        return f"https://{self.blob_acc_name}.blob.core.windows.net/{self.container_name}/{file_name}" + "?" + generate_blob_sas(account_name= self.blob_acc_name, container_name=self.container_name, blob_name= file_name, account_key= self.blob_acc_key, permission='r', expiry=datetime.utcnow() + timedelta(hours=1))

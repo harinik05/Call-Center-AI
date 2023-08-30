@@ -21,21 +21,21 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         print(file_info)
 
     # Delete a file from the container
-    handler.delete_file('uploaded_file.pdf')
+    handler.remove_file('uploaded_file.pdf')
     # Parse the request and get the file content
     file_content = req.get_body()
 
     # Update blob metadata
     metadata = {'author': 'John Doe', 'category': 'PDF'}
-    handler.update_blob_metadata('uploaded_file.pdf', metadata)
+    handler.upload_file_metadata('uploaded_file.pdf', metadata)
 
     # Generate a SAS URL for the container
-    container_sas_url = handler.generate_container_sas()
+    container_sas_url = handler.retrieve_sas_container()
     print(f'Container SAS URL: {container_sas_url}')
 
     # Generate a SAS URL for a specific blob
     blob_name = 'uploaded_file.pdf'
-    blob_sas_url = handler.generate_blob_sas(blob_name)
+    blob_sas_url = handler.retrieve_sas_blob(blob_name)
     print(f'Blob SAS URL: {blob_sas_url}')
 
 
