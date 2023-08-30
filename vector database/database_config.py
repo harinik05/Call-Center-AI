@@ -77,6 +77,7 @@ class RedisExtended(Redis):
         self.delete_keys(keys)
 
     '''
+    creates index
     '''
     def create_index(self, prefix = "doc", distance_metric:str="COSINE"):
         content = TextField(name="content")
@@ -105,6 +106,9 @@ class RedisExtended(Redis):
             definition = IndexDefinition(prefix=[prefix], index_type=IndexType.HASH)
         )
 
+    '''
+    adds data to the related prompt result in redis
+    '''
     def add_prompt_result(self, id, result, filename="", prompt=""):
         self.client.hset(
             f"prompt:{id}",
@@ -115,6 +119,10 @@ class RedisExtended(Redis):
             }
         )
 
+    '''
+    gets the prompt results depending on whatever prompt index you give and returns it 
+    as a pandas dataframe
+    '''
     def get_prompt_results(self, prompt_index_name="prompt-index", number_of_results: int=3155):
         base_query = f'*'
         return_fields = ['id','result','filename','prompt']
