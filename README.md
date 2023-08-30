@@ -49,7 +49,8 @@ There is a mock client created for Azure Blob Storage, which is initialized with
 Improved Security Measures: Uploading the file as a binary data instead of actual file content to Blob storage, and using SAS tokens to access the files instead of hardcoding or using environmental variables. 
 
 ### File Packaging Process
-![1](https://github.com/harinik05/Call-Center-AI/assets/63025647/1512914b-92c6-4f3b-9927-9f6e199be2d4)
+Block blobs were employed due to the large size of the file (the Apple iPhone manual) and for security considerations. The file was converted into binary data for storage. This functionality was integrated into the `__init.py__` main method as part of Azure Functions. A POST HTTP request is dispatched to upload the file and its metadata content, and a success message is obtained upon successful completion. This design was implemented using the Singleton pattern, employing the `get_instance` class method to eliminate the need for client reinitialization for each operation, thus enhancing efficiency and resource management.
+![Untitled Diagram-Page-3 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/674fee70-1561-40a3-a68c-3dd3adf787de)
 
 
 
