@@ -31,9 +31,16 @@ class AzureFormRecognizerClient:
         self.form_recognizer_key : str = form_recognizer_key if form_recognizer_key else os.getenv('FORM_RECOGNIZER_KEY')
 
 
-    
+    '''
+    this method performs document analysis using Azure Form Recognizer, extracts content
+    from paragraphs and tables in the document's layout, and organizes the content into
+    output files based on the self.pages_per_embeddings attribute
+    '''
     def analyze_read(self, formUrl):
 
+        '''
+        
+        '''
         document_analysis_client = DocumentAnalysisClient(
             endpoint=self.form_recognizer_endpoint, credential=AzureKeyCredential(self.form_recognizer_key)
         )
