@@ -62,6 +62,9 @@ MAX_UPLOAD_BATCH_SIZE = 1000
 MAX_DELETE_BATCH_SIZE = 1000
 
 '''
+initializes and returns a SearchClient for Azure Cognitive Search 
+based on provided credentials and settings. It also creates the 
+search index if it doesn't exist.
 '''
 def get_search_client(endpoint: str, key: str, index_name: str, semantic_configuration_name:str = None) -> SearchClient:
     if key is None:
@@ -124,7 +127,9 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
     # Create the search client
     return SearchClient(endpoint=endpoint, index_name=index_name, credential=AzureKeyCredential(key))
 
+'''
 
+'''
 class AzureSearch(VectorStore):
     def __init__(
         self,
