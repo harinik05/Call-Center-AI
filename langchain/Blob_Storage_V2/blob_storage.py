@@ -5,6 +5,15 @@ from dotenv import load_dotenv
 
 class AzureBlobStorageClient:
 
+    # Singleton instance
+    _instance = None
+
+    @classmethod
+    def get_instance(cls, blob_acc_name=None, blob_acc_key=None, container_name=None):
+        if cls._instance is None:
+            cls._instance = cls(blob_acc_name, blob_acc_key, container_name)
+        return cls._instance
+
     '''
     constructor created to initialize the attributes and properties of an instance of class when 
     made
@@ -30,12 +39,11 @@ class AzureBlobStorageClient:
             -> derived from account name and account key
         5. service client - creates a client for interacting with Azure Blob storage 
         '''
-        self.blob_acc_name : str = blob_acc_name if blob_acc_name else os.getenv('BLOB_ACCOUNT_NAME')
-        self.blob_acc_key : str = blob_acc_key if blob_acc_key else os.getenv('BLOB_ACCOUNT_KEY')
-        self.blob_connection_url : str = f"DefaultEndpointsProtocol=https;AccountName={self.blob_acc_name};AccountKey={self.blob_acc_key};EndpointSuffix=core.windows.net"
-        self.container_name : str = container_name if container_name else os.getenv('BLOB_CONTAINER_NAME')
-        self.blob_service_client : BlobServiceClient = BlobServiceClient.from_connection_string(self.blob_connection_url)
-
+        self.blob_acc_name = blob_acc_name if blob_acc_name else os.getenv('BLOB_ACCOUNT_NAME')
+        self.blob_acc_key = blob_acc_key if blob_acc_key else os.getenv('BLOB_ACCOUNT_KEY')
+        self.blob_connection_url = f"DefaultEndpointsProtocol=https;AccountName={self.blob_acc_name};AccountKey={self.blob_acc_key};EndpointSuffix=core.windows.net"
+        self.container_name = container_name if container_name else os.getenv('BLOB_CONTAINER_NAME')
+        self.blob_service_client = BlobServiceClient.from_connection_string(self.blob_connection_url)
    
     '''
     function will upload the binary data (bytes) to Azure Blob Storage container and 
