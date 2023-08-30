@@ -65,6 +65,7 @@ The conversation history between the user and OpenAI, likely saved as a text fil
 
 5. **Key Generation**: For each document, a unique key is generated. This key is based on a combination of the `source_url`, the document index (`i`), and a SHA-1 hash of this combination. The key is likely used for identifying and retrieving the document later.
 
+![Untitled Diagram-Page-4 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/a6af7dc4-50f6-4d9c-a19e-1afe3975104e)
 
 
 
