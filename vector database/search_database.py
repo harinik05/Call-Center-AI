@@ -91,7 +91,7 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
             SearchableField(name=FIELDS_METADATA, type=SearchFieldDataType.String,
                             searchable=True, retrievable=True)
         ]
-        # Vector search configuration
+        
         vector_search = VectorSearch(
             algorithm_configurations=[
                 VectorSearchAlgorithmConfiguration(
@@ -128,7 +128,10 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
     return SearchClient(endpoint=endpoint, index_name=index_name, credential=AzureKeyCredential(key))
 
 '''
-
+This class represents an interface to Azure Cognitive Search. 
+It provides methods for adding texts to the search index, performing 
+similarity searches, hybrid searches, and semantic hybrid searches. 
+It also handles the creation of the search index if it doesn't exist.
 '''
 class AzureSearch(VectorStore):
     def __init__(
@@ -418,7 +421,12 @@ class AzureSearch(VectorStore):
                 documents = []
         return self.client.delete_documents(documents=documents)
 
-
+'''
+ Pydantic model that defines a retriever for using Azure Cognitive Search
+   as a vector store. It allows specifying the search type (similarity, 
+   hybrid, or semantic hybrid) and performs document retrieval based on 
+   the provided query.
+'''
 
 class AzureSearchVectorStoreRetriever(BaseRetriever, BaseModel):
     vectorstore: AzureSearch
