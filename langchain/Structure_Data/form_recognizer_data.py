@@ -39,16 +39,30 @@ class AzureFormRecognizerClient:
     def analyze_read(self, formUrl):
 
         '''
-        
+        Initialize the DocumentAnalysisClient object, which is used to interact with 
+        the Azure Form Recognizer service. Initialized with teh form_recognizer_endpoint and key 
+        attributes set in the class constructor
         '''
         document_analysis_client = DocumentAnalysisClient(
             endpoint=self.form_recognizer_endpoint, credential=AzureKeyCredential(self.form_recognizer_key)
         )
         
+        '''
+        poller initiates the document analysis using the provided URL. The document is 
+        analyzed with the prebuilt layout model, which is designed to recognize the layout
+        and structure of the documents
+        '''
         poller = document_analysis_client.begin_analyze_document_from_url(
                 "prebuilt-layout", formUrl)
+        
+        '''
+        results of the document analysis are stored in the layout variable
+        '''
         layout = poller.result()
 
+        '''
+        
+        '''
         results = []
         page_result = ''
         for p in layout.paragraphs:
