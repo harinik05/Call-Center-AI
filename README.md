@@ -25,6 +25,9 @@ Azure Blob Storage is a cloud-based object storage service provided by Microsoft
 There is a mock client created for Azure Blob Storage, which is initialized with the following information in the constructor: 
 
 | Parameters | Value | Variable Name |
-| ------------- | ------------- |------------- |
-| Content Cell  | Content Cell  |Content Cell  |
-| Content Cell  | Content Cell  |Content Cell  |
+| ---------------- | ---------------- |---------------- |
+| Account Name  | Content Cell  |Content Cell  |
+| Account Key  | Content Cell  |Content Cell  |
+| Connection String (URL) | Content Cell  |Content Cell  |
+| Container Name  | Content Cell  |Content Cell  |
+| Blob Client | Content Cell  |Content Cell  |
