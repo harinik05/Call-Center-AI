@@ -33,15 +33,19 @@ class RedisExtended(Redis):
     ):
         
         '''
-        
+        constructor of the base class to initialize the common attributes 
         '''
         super().__init__(redis_url, index_name, embedding_function)
         
-        # Check if index exists
+        '''
+        checks if certain redis prompt indexes and specified index name exists
+        '''
         try:
             self.client.ft("prompt-index").info()
         except: 
-            # Create Redis Index
+            '''
+            creates the index if it doesnt already exist
+            '''
             self.create_prompt_index()
 
         try:
@@ -50,6 +54,7 @@ class RedisExtended(Redis):
             # Create Redis Index
             self.create_index()
 
+    
     def check_existing_index(self, index_name: str = None):
         try:
             self.client.ft(index_name if index_name else self.index_name).info()
