@@ -54,7 +54,9 @@ class RedisExtended(Redis):
             # Create Redis Index
             self.create_index()
 
-    
+    '''
+    checks if the specified index exists in redis
+    '''
     def check_existing_index(self, index_name: str = None):
         try:
             self.client.ft(index_name if index_name else self.index_name).info()
