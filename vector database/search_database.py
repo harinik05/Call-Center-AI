@@ -92,6 +92,21 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
                             searchable=True, retrievable=True)
         ]
         
+        '''
+        vector search algorithm - hierarchical navigable small world (for Azure Cognitive
+        search index)
+        m: This parameter controls the degree of the graph in the HNSW algorithm. It determines how many connections 
+        each node has in the graph. A higher value typically results in higher recall (finding more similar items), 
+        but it can also increase computation time and memory usage.
+        efConstruction: This parameter controls the number of candidates explored during the index construction phase.
+         It affects the quality of the index but also impacts construction time.
+        efSearch: This parameter controls the number of candidates explored during the search phase (query time). 
+        It affects the trade-off between search speed and search quality.
+        metric: This specifies the distance metric used for measuring the similarity between vectors. 
+        In this case, it's set to "cosine," indicating that the cosine similarity metric will be used. 
+        Cosine similarity is commonly used for text and high-dimensional data because it measures the cosine of the 
+        angle between vectors, which is a way to compare their directions in space.
+        '''
         vector_search = VectorSearch(
             algorithm_configurations=[
                 VectorSearchAlgorithmConfiguration(
@@ -106,7 +121,9 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
                 )
             ]
         )
-        # Create the semantic settings with the configuration
+        
+        '''
+        '''
         semantic_settings = None if semantic_configuration_name is None else SemanticSettings(
             configurations=[SemanticConfiguration(
                 name=semantic_configuration_name,
