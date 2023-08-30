@@ -139,6 +139,7 @@ def get_search_client(endpoint: str, key: str, index_name: str, semantic_configu
             )
             ]
         )
+
         # Create the search index with the semantic settings and vector search
         index = SearchIndex(name=index_name, fields=fields,
                             vector_search=vector_search, semantic_settings=semantic_settings)
