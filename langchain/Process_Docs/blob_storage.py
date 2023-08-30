@@ -199,7 +199,8 @@ class AzureBlobStorageClient:
         that this is the standard way to start the query of a string in the URL
         '''
         return "?" + generate_container_sas(account_name= self.account_name, container_name= self.container_name,account_key=self.account_key,  permission="r", expiry=datetime.utcnow() + timedelta(hours=1))
-
+    '''
+    this is the same as the last function (its for the sas of the blob)
+    '''
     def get_blob_sas(self, file_name):
-        # Generate a SAS URL to the blob and return it
         return f"https://{self.account_name}.blob.core.windows.net/{self.container_name}/{file_name}" + "?" + generate_blob_sas(account_name= self.account_name, container_name=self.container_name, blob_name= file_name, account_key= self.account_key, permission='r', expiry=datetime.utcnow() + timedelta(hours=1))
