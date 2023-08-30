@@ -43,14 +43,14 @@ def main(msg: func.QueueMessage) -> None:
     Extracts the "filename" field from the JSON content of the queue
     message. The message is initially in UTF-8 and parsed as a JSON format
     '''
-    file_name = json.loads(msg.get_body().decode('utf-8'))['filename']
+    filename_info = json.loads(msg.get_body().decode('utf-8'))['filename']
 
     '''
     Generates a Shared Access Signature (SAS) URL for the file given 
     in the file name. This URL can be used to access the file in the 
     Azure Blob Storage
     '''
-    file_sas = llm_helper.blob_client.get_blob_sas(file_name)
+    file_sas = llm_helper.blob_client.retrieve_sas_blob(filename_info)
 
     '''
     Checks if the file extension is txt. If the file has txt extension:
@@ -61,15 +61,15 @@ def main(msg: func.QueueMessage) -> None:
     Calls a different method to convert the file content and then process the 
     file contents/add embeddings
     '''
-    if file_name.endswith('.txt'):
+    if filename_info.endswith('.txt'):
         # Add the text to the embeddings
         llm_helper.add_embeddings_lc(file_sas)
     else:
         # Get OCR with Layout API and then add embeddigns
-        llm_helper.convert_file_and_add_embeddings(file_sas , file_name)
+        llm_helper.convert_file_and_add_embeddings(file_sas , filename_info)
 
     '''
     Updates the metadata of the blob in the Azure Blob Storage, setting
     the metadata to sucess message. 
     '''
-    llm_helper.blob_client.upsert_blob_metadata(file_name, {'embeddings_added': 'true'})
+    llm_helper.blob_client.upsert_blob_metadata(filename_info, {'embeddings_added': 'true'})
