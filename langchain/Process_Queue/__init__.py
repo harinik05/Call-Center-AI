@@ -63,10 +63,10 @@ def main(msg: func.QueueMessage) -> None:
     '''
     if filename_info.endswith('.txt'):
         # Add the text to the embeddings
-        llm_helper.add_embeddings_lc(file_sas)
+        llm_helper.add_embeddings_preprocess(file_sas)
     else:
         # Get OCR with Layout API and then add embeddigns
-        llm_helper.convert_file_and_add_embeddings(file_sas , filename_info)
+        llm_helper.file_conversion_add_embeddings_preprocess(file_sas , filename_info)
 
     '''
     Updates the metadata of the blob in the Azure Blob Storage, setting

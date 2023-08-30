@@ -109,7 +109,7 @@ class LLMHelper:
         self.user_agent: UserAgent() = UserAgent()
         self.user_agent.random
 
-    def add_embeddings_lc(self, source_url):
+    def add_embeddings_preprocess(self, source_url):
         try:
             documents = self.document_loaders(source_url).load()
             
@@ -148,7 +148,7 @@ class LLMHelper:
             logging.error(f"Error adding embeddings for {source_url}: {e}")
             raise e
 
-    def convert_file_and_add_embeddings(self, source_url, filename, enable_translation=False):
+    def file_conversion_add_embeddings_preprocess(self, source_url, filename, enable_translation=False):
         # Extract the text from the file
         text = self.pdf_parser.analyze_read(source_url)
         # Translate if requested
@@ -166,7 +166,7 @@ class LLMHelper:
         # Update the metadata to indicate that the file has been converted
         self.blob_client.upsert_blob_metadata(filename, {"converted": "true"})
 
-        self.add_embeddings_lc(source_url=source_url)
+        self.add_embeddings_preprocess(source_url=source_url)
 
         return converted_filename
 
