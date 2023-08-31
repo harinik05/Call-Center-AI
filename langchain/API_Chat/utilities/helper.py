@@ -3,7 +3,7 @@ class LLMHelper:
         self.custom_prompt = custom_prompt
         self.temperature = temperature
 
-    def get_semantic_answer_lang_chain(self, question, history):
+    def retrieve_semantic_response(self, question, history):
         # Simulated function for generating a response
         response = "This is a sample response."
 
