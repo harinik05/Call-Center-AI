@@ -89,6 +89,11 @@ The Python class (`AzureTranslatorClient`) for language translation using Azure 
 
 ![Untitled Diagram-Page-5 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/1db8d2c5-1b52-4888-97d8-4c313edbcdd4)
 
+## Vector Database & Embeddings
+A vector database is a specialized type of database designed to store and manage vector data efficiently. It's particularly useful for applications that involve machine learning, natural language processing, recommendation systems, and similar tasks where data is represented as high-dimensional vectors. Redis is chosen as a vector database due to its in-memory nature, support for data structures and scripting, and its overall efficiency in handling high-dimensional vector data.
+
+
+
 
 
 
