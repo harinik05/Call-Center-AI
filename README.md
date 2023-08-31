@@ -87,6 +87,7 @@ The class `AzureFormRecognizerClient` provides a way to perform document analysi
 
 The Python class (`AzureTranslatorClient`) for language translation using Azure Translator services. It detects the language of input text and, if needed, translates it to the specified target language. It uses Azure credentials and endpoints specified through environment variables or constructor parameters.
 
+![Untitled Diagram-Page-5 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/1db8d2c5-1b52-4888-97d8-4c313edbcdd4)
 
 
 
