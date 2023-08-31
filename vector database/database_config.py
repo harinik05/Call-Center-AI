@@ -3,16 +3,6 @@ import logging
 import uuid
 from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Tuple
 
-from langchain.vectorstores.redis import Redis
-from langchain.docstore.document import Document
-from langchain.embeddings.base import Embeddings
-from langchain.vectorstores.base import VectorStore
-
-import pandas as pd
-from redis.commands.search.query import Query
-from redis.commands.search.indexDefinition import IndexDefinition, IndexType
-from redis.commands.search.field import VectorField, TagField, TextField
-
 logger = logging.getLogger()
 
 '''
