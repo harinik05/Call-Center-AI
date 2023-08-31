@@ -68,8 +68,22 @@ The conversation history between the user and OpenAI, likely saved as a text fil
 ![Untitled Diagram-Page-4 drawio](https://github.com/harinik05/Call-Center-AI/assets/63025647/a6af7dc4-50f6-4d9c-a19e-1afe3975104e)
 
 
+## Data Wrangler
+Form Recognizer is a Microsoft Azure service designed for extracting structured data from documents. It uses advanced machine learning techniques to analyze various types of documents, such as invoices, receipts, forms, and more. Form Recognizer can automatically identify key fields within these documents, extract information like names, dates, amounts, and other structured data, and then output the results in a structured format. Azure Translator will take any document in the default languages list provided 
 
+| Parameters | Env Var. Value | Variable Name |
+| ---------------- | ---------------- |---------------- |
+| Pages per Embeddings | AZURE_PAGES_PER_EMBEDDING  |pages_per_embeddings  |
+| Section to Exclude  |   |section_to_exclude  |
+| Form Recognizer Endpoint |AZURE_FORM_RECOGNIZER_ENDPOINT |form_recognizer_endpoint |
+| Form Recognizer Key | AZURE_FORM_RECOGNIZER_KEY |form_recognizer_key  |
+| Translate Key | AZURE_TRANSLATE_KEY |translate_key  |
+| Translate Region | AZURE_TRANSLATE_REGION |translate_region  |
+| Translate Key | AZURE_TRANSLATE_KEY |translate_key  |
+| Translate Endpoint | AZURE_TRANSLATE_ENDPOINT |translate_endpoint  |
+| API Version | AZURE_API_VERSION |api_version  |
 
+The class `AzureFormRecognizerClient` provides a way to perform document analysis using Azure Form Recognizer, extract content from paragraphs and tables in the document, and organize the content into output files based on specified parameters.
 
 
 
