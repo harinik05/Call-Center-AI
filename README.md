@@ -102,9 +102,48 @@ All these models are specifically made for natural langiage processing tasks and
 | 4 | text-curie-001 |
 | 5 | code-cushman-001 |
 
-Hyperparameters tuning: 
+#### Hyperparameters tuning: 
+1. **Mode**: Attempt to generate a complete and coherent text based on the given input or prompt if its in the `complete` mode.
+2. **Temperature**: Controls the randomness of generated text. Since the data provided is a bit diversified, the temperature was set to `0.7`
+3. **Maximum Length**: Sets the max length by limiting the output to `256 tokens`. Useful to prevent overly long responses
+4. **Stop Sentences**: Condition that can be set to specify the list of stop sentences or phrases. In this case, it was set to `empty`
+5. **Top P**: Nucleus Sampling is a technique to control the diversity of generated text. This value was set to `1` because the model will consider the entire probability distribution over the vocabulary when generating prompt response.
+6. **Presence Penalty**: Regularization technique that encourages the model to use each word in the prompt (input) once in the output. Higher values would penalize the models for not containing certain words. So, this is set to `0`
+7. **Best of**: Determines how many alternative completions are generated, and the best one is selected. This is set to 1 so only one completion will be generated. 
 
 ### Vector Search Algorithm
+The "Hierarchical Navigable Small World" (HNSW) is an algorithm used for approximate similarity search in high-dimensional vector spaces. It's particularly efficient for searching large collections of data, such as text documents, images, or embeddings used in machine learning.
+
+When a query vector is given to the algorithm, it starts the search at the root level. It uses the connections at that level to navigate to lower levels. At each level, it explores the neighboring points to find those that are close to the query vector. This process continues, moving deeper into the hierarchy until it reaches a level where it can't find better approximate neighbors or it has reached a predefined depth.
+
+It calculates the cosine similarity between the query vector and the vectors stored in the structure at the current level.It identifies the vectors with the highest cosine similarity as the potential nearest neighbors.The algorithm then navigates to the lower levels of the hierarchy, repeating the process of calculating cosine similarity and narrowing down the set of potential neighbors. This is how it will be able to find the "small-world" connections easily. 
+
+```
+cosine_similarity(u, v) = (u • v) / (||u|| * ||v||)
+```
+![image](https://github.com/harinik05/Call-Center-AI/assets/63025647/5442ad87-ae05-41a8-9c87-d4c9e7bc4d9f)
+Credit: https://towardsdatascience.com/similarity-search-part-4-hierarchical-navigable-small-world-hnsw-2aad4fe87d37
+
+The code implementation for this algorithm is shown: 
+```
+vector_search = VectorSearch(
+            algorithm_configurations=[
+                VectorSearchAlgorithmConfiguration(
+                    name="default",
+                    kind="hnsw",
+                    hnsw_parameters={
+                        "m": 4,
+                        "efConstruction": 400,
+                        "efSearch": 500,
+                        "metric": "cosine"
+                    }
+                )
+            ]
+        )
+```
+
+Its hyperparamers are `
+
 
 ## ML Prompt Flow (GenAI)
 
