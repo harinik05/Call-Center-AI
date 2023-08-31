@@ -92,8 +92,25 @@ The Python class (`AzureTranslatorClient`) for language translation using Azure 
 ## Vector Database & Embeddings
 A vector database is a specialized type of database designed to store and manage vector data efficiently. It's particularly useful for applications that involve machine learning, natural language processing, recommendation systems, and similar tasks where data is represented as high-dimensional vectors. Redis is chosen as a vector database due to its in-memory nature, support for data structures and scripting, and its overall efficiency in handling high-dimensional vector data.
 
+### OpenAI Prompt Model
+| Variant | Model | Expected Result |
+| ---------------- | ---------------- |---------------- |
+| 1 | AZURE_PAGES_PER_EMBEDDING  |pages_per_embeddings  |
+| Section to Exclude  |   |section_to_exclude  |
+| Form Recognizer Endpoint |AZURE_FORM_RECOGNIZER_ENDPOINT |form_recognizer_endpoint |
+| Form Recognizer Key | AZURE_FORM_RECOGNIZER_KEY |form_recognizer_key  |
+| Translate Key | AZURE_TRANSLATE_KEY |translate_key  |
+| Translate Region | AZURE_TRANSLATE_REGION |translate_region  |
+| Translate Key | AZURE_TRANSLATE_KEY |translate_key  |
+| Translate Endpoint | AZURE_TRANSLATE_ENDPOINT |translate_endpoint  |
+| API Version | AZURE_API_VERSION |api_version  |
 
+Hyperparameters tuning: 
 
+### Vector Search Algorithm
 
+## ML Prompt Flow (GenAI)
+
+## Future
 
 
