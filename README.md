@@ -142,8 +142,10 @@ vector_search = VectorSearch(
         )
 ```
 
-Its hyperparamers are `
-
+Its hyperparamers are:
+1. `m`: This parameter controls the degree of the graph in the HNSW algorithm. It determines how many connections each node has in the graph. A higher value typically results in higher recall (finding more similar items), but it can also increase computation time and memory usage.
+2. `efConstruction`: This parameter controls the number of candidates explored during the index construction phase.It affects the quality of the index but also impacts construction time.
+3. `efSearch`: This parameter controls the number of candidates explored during the search phase (query time). 
 
 ## ML Prompt Flow (GenAI)
 
