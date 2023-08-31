@@ -83,7 +83,9 @@ Form Recognizer is a Microsoft Azure service designed for extracting structured 
 | Translate Endpoint | AZURE_TRANSLATE_ENDPOINT |translate_endpoint  |
 | API Version | AZURE_API_VERSION |api_version  |
 
-The class `AzureFormRecognizerClient` provides a way to perform document analysis using Azure Form Recognizer, extract content from paragraphs and tables in the document, and organize the content into output files based on specified parameters.
+The class `AzureFormRecognizerClient` provides a way to perform document analysis using Azure Form Recognizer, extract content from paragraphs and tables in the document, and organize the content into output files based on specified parameters. 
+
+The Python class (`AzureTranslatorClient`) for language translation using Azure Translator services. It detects the language of input text and, if needed, translates it to the specified target language. It uses Azure credentials and endpoints specified through environment variables or constructor parameters.
 
 
 
