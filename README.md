@@ -148,7 +148,12 @@ Its hyperparamers are:
 3. `efSearch`: This parameter controls the number of candidates explored during the search phase (query time). 
 
 ## ML Prompt Flow (GenAI)
+LangChain's existing codebase has been utilized to create a custom runtime environment on Microsoft Azure for deploying and testing the model's functionality. This involved dividing the testing into multiple runs, assessing various models. Notably, `text-embedding-ada-002` proved highly effective in handling embeddings and large-scale LLM processing. The environment setup began with the establishment of connections using key-value pairs in the prompt flow workspace. Subsequently, prompt nodes were constructed in a flow-chart-like structure, with fine-tuning of hyperparameters. Then, the `bulk test` command can be used and the input test and training sets are entered in as `input mappings` on the console. 
 
-## Future
+The purpose of creating an online endpoint for real-time inference after building and thoroughly testing a flow is to make the model accessible and usable by external users or applications in a production environment.When you build a flow and test it, you are essentially developing and refining your machine learning or natural language processing model to ensure it works as intended and provides accurate results. 
+
+![concept-deployment-routing](https://github.com/harinik05/Call-Center-AI/assets/63025647/dd9e4260-543b-475d-ad88-3688d81dfc96)
+Source: https://learn.microsoft.com/en-us/azure/machine-learning/concept-endpoints?view=azureml-api-2
+
 
 
